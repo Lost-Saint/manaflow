@@ -17,7 +17,7 @@ function prepareIcons() {
 }
 
 function pack() {
-  return gulp.src(['dist/**/*']).pipe(zip('ff_ext_fps_meter.zip')).pipe(gulp.dest('dist'));
+  return gulp.src(['dist/**/*']).pipe(zip('ff_ext_manaflow.zip')).pipe(gulp.dest('dist'));
 }
 
 export const clean = cleanDist;
