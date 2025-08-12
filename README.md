@@ -39,5 +39,3 @@ For Firefox
 2. Access - [about:debugging#/runtime/this-firefox](about:debugging#/runtime/this-firefox)
 3. Click - Load temporary Add-on
 4. Select - any file in `dist_firefox` folder (i.e. `manifest.json`) in this project (after dev or build)
-
-### Customization <a name="customization"></a>
