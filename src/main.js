@@ -62,11 +62,9 @@ class FPSWidget {
     if (this.enabled) {
       this.widget.classList.remove('enabled');
       this.enabled = false;
-      console.log('fps widget disabled');
     } else {
       this.widget.classList.add('enabled');
       this.enabled = true;
-      console.log('fps widget enabled');
       this.lastTime = performance.now();
       this.frameCount = 0;
       this.frameHistory = [];
