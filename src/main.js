@@ -1,6 +1,16 @@
 'use strict';
 
+/**
+ * A ring buffer implementation with fixed size using FIFO (First In, First Out) behavior
+ *
+ * The buffer overwrites oldest values when full and keeps track of valid elements count.
+ * Provides array-like access to elements with index 0 being the oldest element.
+ */
 class RingFIFO {
+  /**
+   * Creates a new ring buffer with specified size
+   * @param {number} size - Maximum number of elements the buffer can hold
+   */
   constructor(size) {
     this.size = size;
     this.__buffer = new Array(size);
@@ -9,6 +19,10 @@ class RingFIFO {
     this.__count = 0;
   }
 
+  /**
+   * Adds a value to the buffer, overwriting oldest value if buffer is full
+   * @param {*} val - Value to add to the buffer
+   */
   push(val) {
     this.__buffer[this.__head] = val;
     this.__head = (this.__head + 1) % this.size;
@@ -17,6 +31,16 @@ class RingFIFO {
     }
   }
 
+  /**
+   * Gets value at specified index relative to the oldest element
+   *
+   * Edge cases:
+   * - Returns 0 for out-of-bounds indices
+   * - Index 0 is the oldest element, index (length-1) is the newest
+   *
+   * @param {number} index - Index of element to retrieve (0-based)
+   * @returns {*} Value at the index or 0 if index is out of bounds
+   */
   get(index) {
     if (index < 0 || index >= this.__count) {
       return 0;
@@ -26,12 +50,32 @@ class RingFIFO {
     return this.__buffer[(start + index) % this.size];
   }
 
+  /**
+   * Gets the current number of elements in the buffer
+   * @returns {number} Number of valid elements in the buffer
+   */
   get length() {
     return this.__count;
   }
 }
 
+/**
+ * A widget that displays a real-time FPS (Frames Per Second) graph using Canvas
+ *
+ * Features:
+ * - Shows current FPS as text
+ * - Displays a line graph of FPS history
+ * - Uses averaging to smooth FPS display
+ * - Toggleable visibility
+ */
 class FPSWidget {
+  /**
+   * Creates and initializes an FPS widget
+   *
+   * @param {number} width - Width of the widget in pixels
+   * @param {number} height - Height of the widget in pixels
+   * @param {number} graphSize - Number of data points to show in the graph
+   */
   constructor(width, height, graphSize) {
     this.widget = document.createElement('canvas');
     this.widget.classList.add('fps-widget');
@@ -58,6 +102,13 @@ class FPSWidget {
     document.body.appendChild(this.widget);
   }
 
+  /**
+   * Toggles the visibility of the FPS widget
+   *
+   * Side effects:
+   * - When enabled, starts the animation loop and resets counters
+   * - When disabled, stops the animation loop
+   */
   toggle() {
     if (this.enabled) {
       this.widget.classList.remove('enabled');
@@ -72,6 +123,14 @@ class FPSWidget {
     }
   }
 
+  /**
+   * Calculates current FPS based on frame count and elapsed time
+   *
+   * Uses a rolling average of the last 5 measurements to smooth out fluctuations.
+   * Updates occur approximately every 100ms.
+   *
+   * @param {number} currentTime - Current timestamp from requestAnimationFrame
+   */
   calcFPS(currentTime) {
     this.frameCount++;
 
@@ -96,6 +155,12 @@ class FPSWidget {
     }
   }
 
+  /**
+   * Animation loop that calculates FPS and draws the widget when enabled
+   *
+   * Uses requestAnimationFrame for optimal performance and synchronization
+   * with the browser's rendering cycle.
+   */
   loop() {
     if (this.enabled) {
       window.requestAnimationFrame(currentTime => {
@@ -106,6 +171,12 @@ class FPSWidget {
     }
   }
 
+  /**
+   * Renders the FPS graph and current FPS value on the canvas
+   *
+   * The graph shows historical FPS values with the newest values on the right.
+   * FPS is scaled relative to a maximum value of 60 FPS.
+   */
   draw() {
     this.context.fillStyle = 'white';
     this.context.fillRect(0, 0, this.width, this.height);
@@ -137,6 +208,12 @@ class FPSWidget {
   }
 }
 
+/**
+ * Self-executing function that initializes the FPS widget and sets up
+ * a message listener for browser extension communication
+ *
+ * The widget is toggled on/off when receiving a 'clicked_browser_action' message
+ */
 (function () {
   let fps = new FPSWidget(120, 80, 30);
 

@@ -1,15 +1,21 @@
 {
   "manifest_version": 2,
   "name": "ManaFlow",
-  "version": "1.1",
-  "description": "Show fps graph",
-  "icons": {
-    "48": "assets/baseline_equalizer_black_48dp.png"
-  },
-  "permissions": ["activeTab"],
+  "version": "1.0.0",
+  "author": "Lost Saint",
+  "description": "Show FPS graph",
+  "default_locale": "en",
   "browser_action": {
-    "default_icon": "assets/baseline_equalizer_black_48dp.png",
+    "default_icon": {
+      "19": "assets/fps-19.png",
+      "38": "assets/fps-38.png"
+    },
     "default_title": "ManaFlow"
+  },
+  "icons": {
+    "16": "assets/fps-dr-16.png",
+    "48": "assets/fps-dr-48.png",
+    "128": "assets/fps-dr-128.png"
   },
   "background": {
     "scripts": ["browser-polyfill.min.js", "background.js"]
@@ -20,5 +26,18 @@
       "js": ["browser-polyfill.min.js", "main.js"],
       "css": ["main.css"]
     }
-  ]
+  ],
+  "permissions": ["activeTab"],
+
+  "commands": {
+    "toggle-fps": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "Command+Shift+F"
+      },
+      "description": "Toggle FPS display"
+    }
+  },
+
+  "content_security_policy": "script-src 'self'; object-src 'self'"
 }
