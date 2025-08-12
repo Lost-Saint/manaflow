@@ -1,0 +1,40 @@
+{
+  "name": "manaflow",
+  "version": "1.0.0",
+  "description": "fps meter widget",
+  "main": "dist/main.js",
+  "type": "module",
+  "scripts": {
+    "clean": "gulp clean",
+    "build": "gulp",
+    "build:dev": "gulp prepare",
+    "lint": "eslint src/**/*.js --fix",
+    "format": "prettier --write src/**/*.{js,css,json}"
+  },
+  "keywords": [
+    "fps",
+    "meter",
+    "widget"
+  ],
+  "author": "Lost-Saint",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lost-Saint/"
+  },
+  "license": "GLWTS",
+  "packageManager": "pnpm@10.13.1",
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.33.0",
+    "eslint": "^9.32.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^16.3.0",
+    "gulp": "^5.0.1",
+    "gulp-clean": "^0.4.0",
+    "gulp-zip": "^6.1.0",
+    "prettier": "^3.6.2"
+  },
+  "dependencies": {
+    "webextension-polyfill": "^0.12.0"
+  }
+}
